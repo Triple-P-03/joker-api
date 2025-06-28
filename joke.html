@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Joke Generator</title>
+</head>
+<body>
+  <h1>😆😆Joke Generator</h1><br>
+  <button onclick="tell()">Tell me a joke</button>
+  <div id="jok"></div>
+
+  <script>
+    async function tell() {
+      try {
+        const res = await fetch('https://official-joke-api.appspot.com/random_joke');
+        const data = await res.json();
+        const output = `
+          <p><strong>Setup:</strong> ${data.setup}</p>
+          <p><strong>Punchline:</strong> ${data.punchline}</p>
+          <p><strong>type:</strong> ${data.type}</p>
+          <p><strong>id:</strong> ${data.id}</p>
+          
+        `;
+        document.getElementById('jok').innerHTML = output;
+      } catch (err) {
+        document.getElementById('jok').innerHTML = `<p>😢 Oops! Couldn't fetch a joke right now.</p>`;
+        console.error(err);
+      }
+    }
+  </script>
+</body>
+</html>
